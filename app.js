@@ -1,15 +1,33 @@
-let vm = Vue.createApp({
+const vm = Vue.createApp({
   data() {
     return {
-      isPurple: false,
-      selected: "",
+      perspective: 100,
+      rotateX: 0,
+      rotateY: 0,
+      rotateZ: 0,
     };
   },
   computed: {
-    setClass() {
+    box() {
       return {
-        purple: this.isPurple,
+        transform: `
+        perspective(${this.perspective}px)
+        rotateX(${this.rotateX}deg)
+            rotateY(${this.rotateY}deg)
+                rotateZ(${this.rotateZ}deg)`,
       };
     },
+  },
+  methods: {
+    reset() {
+      this.perspective = 100;
+      this.rotateY = 0;
+      this.rotateZ = 0;
+      this.rotateX = 0;
+    },
+    async copy() {
+        const text = `transofrm:${this.box.transform}`
+        await navigator.clipboard.writeText(text)
+    }
   },
 }).mount("#app");
