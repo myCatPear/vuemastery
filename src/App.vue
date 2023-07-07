@@ -1,14 +1,15 @@
 <template>
   <div class="ctr">
-    <questions v-if="questionsAnsweered < questions.length" :questions="questions"/>
-    <result v-else/>
+    <questions v-if="questionsAnsweered < questions.length" :questions="questions"
+      :questions-answered="questionsAnsweered" @question-answered="questionAnsweered" />
+    <result v-else />
     <button type="button" class="reset-btn">Reset</button>
   </div>
 </template>
 
 <script>
-  import Questions from './components/Questions.vue'
-  import Result from './components/Result.vue'
+import Questions from './components/Questions.vue'
+import Result from './components/Result.vue'
 
 
 export default {
@@ -19,6 +20,7 @@ export default {
   data() {
     return {
       questionsAnsweered: 0,
+      totalCorrect: 0,
       questions: [
         {
           q: 'What is 2 + 2?',
@@ -94,6 +96,15 @@ export default {
           desc: "Studying has definitely paid off for you!"
         }
       ]
+    }
+  },
+  methods: {
+    questionAnsweered(is_correct) {
+      console.log(is_correct)
+      if (is_correct) {
+        this.totalCorrect += 1;
+      }
+      this.questionsAnsweered += 1;
     }
   }
 };
