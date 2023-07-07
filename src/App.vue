@@ -49,7 +49,7 @@
   </transition> -->
 
   <transition @before-enter="beforeEnter" @enter="enter" @after-enter="afterEnter" @before-leave="beforeLeave"
-    @leave="leave" @after-leave="afterLeave" :css="false">
+    @leave="leave" @after-leave="afterLeave" :css="true" name="fade">
     <h2 v-if="flag">Hey den</h2>
   </transition>
 </template>
@@ -86,14 +86,14 @@ export default {
     },
     enter(el, done) {
       console.log('Enter event fired', el)
-      const animation = el.animate([{ transform: "scale3d(0,0,0)" }, {}], {
-        duration: 1000,
-      })
+      // const animation = el.animate([{ transform: "scale3d(0,0,0)" }, {}], {
+      //   duration: 1000,
+      // })
 
-      animation.onfinish = () => {
-        done()
+      // animation.onfinish = () => {
+      //   done()
 
-      }
+      // }
 
     },
     afterEnter(el) {
@@ -105,14 +105,14 @@ export default {
 
     },
     leave(el, done) {
-      const animation = el.animate([{}, { transform: "scale3d(0,0,0)" }], {
-        duration: 1000,
-      })
+      // const animation = el.animate([{}, { transform: "scale3d(0,0,0)" }], {
+      //   duration: 1000,
+      // })
 
-      animation.onfinish = () => {
-        done()
+      // animation.onfinish = () => {
+      //   done()
 
-      }
+      // }
     },
     afterLeave(el) {
       console.log('afterLeave event fired', el)
