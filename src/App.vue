@@ -1,9 +1,12 @@
 <template>
   <div class="ctr">
-    <questions v-if="questionsAnsweered < questions.length" :questions="questions"
-      :questions-answered="questionsAnsweered" @question-answered="questionAnsweered" />
-    <result v-else />
-    <button type="button" class="reset-btn">Reset</button>
+    <transition name="fade" mode="out-in">
+      <questions v-if="questionsAnsweered < questions.length" :questions="questions"
+        :questions-answered="questionsAnsweered" @question-answered="questionAnsweered" />
+      <result v-else :results="results" :total-correct="totalCorrect" />
+    </transition>
+    <button type="button" class="reset-btn" @click.prevent="reset"
+      v-if="questionsAnsweered === questions.length">Reset</button>
   </div>
 </template>
 
@@ -105,7 +108,12 @@ export default {
         this.totalCorrect += 1;
       }
       this.questionsAnsweered += 1;
-    }
+    },
+    reset() {
+      console.log('reset')
+      this.questionsAnsweered = 0;
+      this.totalCorrect = 0;
+    },
   }
 };
 </script>
