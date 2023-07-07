@@ -43,9 +43,14 @@
     <h2 v-if="flag">Hellow deniska</h2>
     <h2 v-else>Bye deniska</h2>
   </transition> -->
-  
-  <transition name="zoom" type="animation" appear>
+
+  <!-- <transition name="zoom" type="animation" appear>
     <h2 v-if="flag">Hello DEN!</h2>
+  </transition> -->
+
+  <transition @before-enter="beforeEnter" @enter="enter" @after-enter="afterEnter" @before-leave="beforeLeave"
+    @leave="leave" @after-leave="afterLeave" :css="false">
+    <h2 v-if="flag">Hey den</h2>
   </transition>
 </template>
 
@@ -76,6 +81,43 @@ export default {
     updateAgeCB(num) {
       this.age += num;
     },
+    beforeEnter(el) {
+      console.log('beforeEnter event fired', el)
+    },
+    enter(el, done) {
+      console.log('Enter event fired', el)
+      const animation = el.animate([{ transform: "scale3d(0,0,0)" }, {}], {
+        duration: 1000,
+      })
+
+      animation.onfinish = () => {
+        done()
+
+      }
+
+    },
+    afterEnter(el) {
+      console.log('afterEnter event fired', el)
+
+    },
+    beforeLeave(el) {
+      console.log('beforeLeave event fired', el)
+
+    },
+    leave(el, done) {
+      const animation = el.animate([{}, { transform: "scale3d(0,0,0)" }], {
+        duration: 1000,
+      })
+
+      animation.onfinish = () => {
+        done()
+
+      }
+    },
+    afterLeave(el) {
+      console.log('afterLeave event fired', el)
+
+    }
   },
 };
 </script>
@@ -86,6 +128,7 @@ h2 {
   padding: 20px;
   margin: 20px;
 }
+
 .fade-enter-from {
   opacity: 0;
 }
@@ -105,7 +148,7 @@ h2 {
 }
 
 .zoom-leave-active {
-    animation: zoom-out 1s linear forwards;
+  animation: zoom-out 1s linear forwards;
   transition: all 2s linear;
 
 }
@@ -113,25 +156,28 @@ h2 {
 .zoom-enter-from {
   opacity: 0;
 }
+
 .zoom-leave-to {
   opacity: 0;
 }
+
 @keyframes zoom-in {
   from {
-      transform: scale(0,0);
+    transform: scale(0, 0);
   }
+
   to {
-      transform: scale(1,1);
+    transform: scale(1, 1);
   }
 }
 
 @keyframes zoom-out {
   from {
-      transform: scale(1,1);
+    transform: scale(1, 1);
   }
+
   to {
-      transform: scale(0,0);
+    transform: scale(0, 0);
   }
 }
-
 </style>
