@@ -36,6 +36,13 @@
   <keep-alive>
     <component :is="componentsName" />
   </keep-alive>
+  <hr>
+  <button type="button" @click="flag = !flag">Toggle</button>
+
+  <transition name="fade">
+  <h2 v-if="flag">Hellow deniska</h2>
+  </transition>
+
 </template>
 
 <script>
@@ -57,7 +64,8 @@ export default {
   data() {
     return {
       age: 20,
-      componentsName: 'Home'
+      componentsName: 'Home',
+      flag:false,
     };
   },
   methods: {
@@ -68,4 +76,17 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.fade-enter-from {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  transition: all .5s linear;
+}
+
+.fade-leave-to {
+  transition: all 1s linear;
+  opacity: 0;
+}
+</style>
