@@ -39,10 +39,10 @@
   <hr>
   <button type="button" @click="flag = !flag">Toggle</button>
 
-  <transition name="fade">
-  <h2 v-if="flag">Hellow deniska</h2>
+  <transition name="fade" mode="out-in">
+    <h2 v-if="flag">Hellow deniska</h2>
+    <h2 v-else>Bye deniska</h2>
   </transition>
-
 </template>
 
 <script>
@@ -65,7 +65,7 @@ export default {
     return {
       age: 20,
       componentsName: 'Home',
-      flag:false,
+      flag: false,
     };
   },
   methods: {
@@ -82,7 +82,7 @@ export default {
 }
 
 .fade-enter-active {
-  transition: all .5s linear;
+  transition: all 1s linear;
 }
 
 .fade-leave-to {
