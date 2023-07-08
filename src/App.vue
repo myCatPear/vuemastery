@@ -1,121 +1,85 @@
-<template>
-  <div class="ctr">
-    <transition name="fade" mode="out-in">
-      <questions v-if="questionsAnsweered < questions.length" :questions="questions"
-        :questions-answered="questionsAnsweered" @question-answered="questionAnsweered" />
-      <result v-else :results="results" :total-correct="totalCorrect" />
-    </transition>
-    <button type="button" class="reset-btn" @click.prevent="reset"
-      v-if="questionsAnsweered === questions.length">Reset</button>
-  </div>
-</template>
-
-<script>
-import Questions from './components/Questions.vue'
-import Result from './components/Result.vue'
-
-
-export default {
-  name: 'App',
-  components: {
-    Questions, Result
-  },
-  data() {
-    return {
-      questionsAnsweered: 0,
-      totalCorrect: 0,
-      questions: [
-        {
-          q: 'What is 2 + 2?',
-          answers: [
-            {
-              text: '4',
-              is_correct: true
-            },
-            {
-              text: '3',
-              is_correct: false
-            },
-            {
-              text: 'Fish',
-              is_correct: false
-            },
-            {
-              text: '5',
-              is_correct: false
-            }
-          ]
-        },
-        {
-          q: 'How many letters are in the word "Banana"?',
-          answers: [
-            {
-              text: '5',
-              is_correct: false
-            },
-            {
-              text: '7',
-              is_correct: false
-            },
-            {
-              text: '6',
-              is_correct: true
-            },
-            {
-              text: '12',
-              is_correct: false
-            }
-          ]
-        },
-        {
-          q: 'Find the missing letter: C_ke',
-          answers: [
-            {
-              text: 'e',
-              is_correct: false
-            },
-            {
-              text: 'a',
-              is_correct: true
-            },
-            {
-              text: 'i',
-              is_correct: false
-            }
-          ]
-        },
-      ],
-      results: [
-        {
-          min: 0,
-          max: 2,
-          title: "Try again!",
-          desc: "Do a little more studying and you may succeed!"
-        },
-        {
-          min: 3,
-          max: 3,
-          title: "Wow, you're a genius!",
-          desc: "Studying has definitely paid off for you!"
-        }
-      ]
-    }
-  },
-  methods: {
-    questionAnsweered(is_correct) {
-      console.log(is_correct)
-      if (is_correct) {
-        this.totalCorrect += 1;
-      }
-      this.questionsAnsweered += 1;
-    },
-    reset() {
-      console.log('reset')
-      this.questionsAnsweered = 0;
-      this.totalCorrect = 0;
-    },
-  }
-};
+<script setup>
+import { RouterLink, RouterView } from 'vue-router'
+import HelloWorld from './components/HelloWorld.vue'
 </script>
 
-<style scoped></style>
+<template>
+  <header>
+    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+
+    <div class="wrapper">
+      <HelloWorld msg="You did it!" />
+
+      <nav>
+        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/about">About</RouterLink>
+      </nav>
+    </div>
+  </header>
+
+  <RouterView />
+</template>
+
+<style scoped>
+header {
+  line-height: 1.5;
+  max-height: 100vh;
+}
+
+.logo {
+  display: block;
+  margin: 0 auto 2rem;
+}
+
+nav {
+  width: 100%;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+nav a.router-link-exact-active {
+  color: var(--color-text);
+}
+
+nav a.router-link-exact-active:hover {
+  background-color: transparent;
+}
+
+nav a {
+  display: inline-block;
+  padding: 0 1rem;
+  border-left: 1px solid var(--color-border);
+}
+
+nav a:first-of-type {
+  border: 0;
+}
+
+@media (min-width: 1024px) {
+  header {
+    display: flex;
+    place-items: center;
+    padding-right: calc(var(--section-gap) / 2);
+  }
+
+  .logo {
+    margin: 0 2rem 0 0;
+  }
+
+  header .wrapper {
+    display: flex;
+    place-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  nav {
+    text-align: left;
+    margin-left: -1rem;
+    font-size: 1rem;
+
+    padding: 1rem 0;
+    margin-top: 1rem;
+  }
+}
+</style>

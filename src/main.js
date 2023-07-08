@@ -1,8 +1,14 @@
-import { createApp } from "vue";
-import App from "./App.vue";
-import "./assets/main.css"
-// import Greeting from "@/components/Greeting.vue";
+import './assets/main.css'
 
-const vm = createApp(App);
-// vm.component("Greeting", Greeting);
-vm.mount("#app");
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+
+import App from './App.vue'
+import router from './router'
+
+const app = createApp(App)
+
+app.use(createPinia())
+app.use(router)
+
+app.mount('#app')
