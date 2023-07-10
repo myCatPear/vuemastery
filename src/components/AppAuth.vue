@@ -91,16 +91,18 @@
                 class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
                 placeholder="Enter Name"
               />
-              <error-message class="text-red-600" name="name"/>
+              <error-message class="text-red-600" name="name" />
             </div>
             <!-- Email -->
             <div class="mb-3">
               <label class="inline-block mb-2">Email</label>
-              <input
+              <vee-field
+                name="email"
                 type="email"
                 class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
                 placeholder="Enter Email"
               />
+              <error-message class="text-red-600" name="email" />
             </div>
             <!-- Age -->
             <div class="mb-3">
@@ -161,26 +163,26 @@
   import { mapState, mapWritableState } from 'pinia'
   import useModalStore from '@/stores/modal'
   export default {
-    name: "AppAuth",
+    name: 'AppAuth',
     data() {
-        return {
-            tab: "login",
-            schema: {
-                name: "required",
-                email: "",
-                age: "",
-                password: "",
-                confirm_password: "",
-                country: "",
-                tos: ""
-            }
-        };
+      return {
+        tab: 'login',
+        schema: {
+          name: 'required|min:3|max:100|alpha_spaces',
+          email: 'required|min:3|max:100|email',
+          age: '',
+          password: '',
+          confirm_password: '',
+          country: '',
+          tos: ''
+        }
+      }
     },
     computed: {
-        ...mapState(useModalStore, ["hiddenClass"]),
-        ...mapWritableState(useModalStore, {
-            modalVisibility: "isOpen"
-        })
-    },
-}
+      ...mapState(useModalStore, ['hiddenClass']),
+      ...mapWritableState(useModalStore, {
+        modalVisibility: 'isOpen'
+      })
+    }
+  }
 </script>
