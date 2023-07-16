@@ -7,11 +7,7 @@
   >
     {{ reg_alert_msg }}
   </div>
-  <vee-form
-    :validation-schema="schema"
-    @submit="register"
-    :initial-values="userData"
-  >
+  <vee-form :validation-schema="schema" @submit="register" :initial-values="userData">
     <!-- Name -->
     <div class="mb-3">
       <label class="inline-block mb-2">Name</label>
@@ -105,8 +101,9 @@
 </template>
 
 <script>
-export default {
-    name:'RegisterForm',
+  import { auth } from '@/includes/firebase'
+  export default {
+    name: 'RegisterForm',
     data() {
       return {
         tab: 'login',
@@ -133,17 +130,27 @@ export default {
       }
     },
     methods: {
-        register(values) {
+      async register(values) {
         this.reg_show_alert = true
         this.reg_in_submission = true
         this.reg_alert_variant = 'bg-blue-500'
         this.reg_alert_msg = 'Please wait! Your account is being created'
 
+        let userCred = null
+        try {
+          userCred = await auth.createUserWithEmailAndPassword(values.email, values.password)
+        } catch (err) {
+          this.reg_in_submission = false
+          this.reg_alert_variant = 'bg-red-500'
+          this.reg_alert_msg = 'An unexepcted error'
+          return
+        }
+
         this.reg_alert_variant = 'bg-green-500'
         this.reg_alert_msg = 'Success! Your account has been created!'
 
-        console.log(values)
-      },
+        console.log(userCred)
+      }
     }
-}
+  }
 </script>
