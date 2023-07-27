@@ -5,11 +5,14 @@ import App from './App.vue'
 import router from './router'
 import VeeValidatePlugn from './includes/validation'
 import { auth } from './includes/firebase'
+import { registerSW } from 'virtual:pwa-register'
 
 import Icon from '@/directives/icon'
 
 import './assets/base.css'
 import './assets/main.css'
+
+registerSW({ immediate: true })
 
 let app
 
