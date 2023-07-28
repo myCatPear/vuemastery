@@ -8,11 +8,15 @@ import { auth } from './includes/firebase'
 import { registerSW } from 'virtual:pwa-register'
 import GlobalComponents from '@/includes/_globals'
 import Icon from '@/directives/icon'
+import progressBar from '@/includes/progress-bar'
 
 import './assets/base.css'
 import './assets/main.css'
+import 'nprogress/nprogress.css'
 
 registerSW({ immediate: true })
+
+progressBar(router)
 
 let app
 
